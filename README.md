@@ -5,4 +5,6 @@
 
 --The main codes for figure is named as "Figure_x".
 
+--"SecrecyCapacity" file is the value matrix for the first case. 
+
 --NOMA and OMA analytic resuts were obtained from "(N)OMA_Theory" codes.
