@@ -31,18 +31,19 @@ hsd2_square = abs(hsd2).^2;% Channel Coefficient hsd2
 hre_square = abs(hre).^2;% Channel Coefficient hre
 
 
-
-
-a1= 0.85;
-a2=1-0.85;
+a1_setup=[0.75 0.85 0.95 ];
+a2_setup=[(1-a1_setup(1)) (1-a1_setup(2)) (1-a1_setup(3))];
 
 %R1,R2,Pe
 
 
-R1_Setup = [ 0.1 1 1.3];
+R1_Setup = [ 0.3 0.3 0.3];
 R2_Setup = [ 2 2 2];
-pe_Setup = [-5 -5 -5];
+pe_Setup = [0 0 0];
 for kk = 1:max(size(R1_Setup))
+
+a1= a1_setup(kk);
+a2= a2_setup(kk);   
 R1=R1_Setup(kk);
 R2=R2_Setup(kk);
 pe=10.^(0.1*pe_Setup(kk));
@@ -97,9 +98,9 @@ semilogy(ps_dB,Tot_SOP1(1,:),'Marker','o','Linewidth',2,'MarkerSize',8,'Color','
 semilogy(ps_dB,Tot_SOP1(2,:),'Marker','hexagram','Linewidth',2,'MarkerSize',8,'Color','#0072BD','LineStyle', ' none '),
 semilogy(ps_dB,Tot_SOP1(3,:),'Marker','x','Linewidth',2,'MarkerSize',8,'Color','#7E2F8E','LineStyle',' none '),
 
-NOMA_THEO(R1_Setup,R2_Setup,pe_Setup);
-Fig3_OMA_Theory(R1_Setup,R2_Setup,pe_Setup);
-legend('R_1=0.1 sim.', 'R_1=1 sim.', 'R_1=1.3 sim.', 'NOMA ana.', '', '', 'NOMA asymptotic', '', '', 'OMA ana.', '', '', 'FontSize',11)
+NOMA_THEO(R1_Setup,R2_Setup,pe_Setup,a1_setup,a2_setup);
+Fig6_OMA_Theory(R1_Setup,R2_Setup,pe_Setup);
+legend('NOMA p_{1}^{2}=0.75 sim.', 'NOMA p_{1}^{2}=0.85 sim.', 'NOMA p_{1}^{2}=0.95 sim.', 'NOMA ana.', '', '', '', '', '', 'OMA ana.', 'OMA sim.', '', 'FontSize',11)
 
 %semilogy(ps_dB,Asymptotic(1,:),'Linewidth',1,'Color',[0.0,0.0,0.0],'LineStyle','--'),hold on
 %semilogy(ps_dB,Asymptotic(2,:),'Linewidth',1,'Color',[0.0,0.0,0.0],'LineStyle','-'),
@@ -116,4 +117,4 @@ legend('R_1=0.1 sim.', 'R_1=1 sim.', 'R_1=1.3 sim.', 'NOMA ana.', '', '', 'NOMA 
 grid on
 xlabel('SNR (dB)','FontSize', 15);
 ylabel('Secrecy Outage Probability','FontSize', 15);
-axis([0 60  1e-3 1])
+axis([0 60  1e-4 1])

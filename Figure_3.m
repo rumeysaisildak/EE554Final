@@ -38,13 +38,13 @@ a2=1-0.85;
 
 %R1,R2,Pe
 
-
-R1_Setup = [ 0.1 1 1.3];
-R2_Setup = [ 2 2 2];
-pe_Setup = [-5 -5 -5];
+R1_Setup = [ 0.5 0.5 0.1];
+R2_Setup = [  2  2  0.5];
+pe_Setup = [  0  -2  -2];
 for kk = 1:max(size(R1_Setup))
 R1=R1_Setup(kk);
 R2=R2_Setup(kk);
+%R2=10.^(0.1*R2);
 pe=10.^(0.1*pe_Setup(kk));
 for i = 1:length(ps_dB)
 
@@ -72,11 +72,11 @@ Capacity_SD2 = 0.5*log2(1+Tot_Y2);
 Capacity_RE1 = 0.5*log2(1+YRE1);
 Capacity_RE2 = 0.5*log2(1+YRE2);
 
-%Secrecy_NOMA1=0.5*log2((1+Tot_Y1)./(1+YRE1));
-%Secrecy_NOMA2=0.5*log2((1+Tot_Y2)./(1+YRE2));
+%Secrecy_NOMA1= 0.5*log((1+Tot_Y1)./(1+YRE1));
+%Secrecy_NOMA2= 0.5*log((1+Tot_Y2)./(1+YRE2));
 
 Secrecy_NOMA1 = max(0,Capacity_SD1-Capacity_RE1);
-Secrecy_NOMA2 = max(0,Capacity_SD2-Capacity_RE2);
+Secrecy_NOMA2 =  max(0,Capacity_SD2-Capacity_RE2);
 
 
     SOP_1 = find(Secrecy_NOMA1>R1);
@@ -85,7 +85,7 @@ Secrecy_NOMA2 = max(0,Capacity_SD2-Capacity_RE2);
      PSOP_1(kk,i)=length(SOP_1)/N;  
      PSOP_2(kk,i)=length(SOP_2)/N;  
      
-     Tot_SOP(kk,i) = 1-((PSOP_1(kk,i))*PSOP_2(kk,i));
+     %Tot_SOP(kk,i) = 1-((PSOP_1(kk,i))*PSOP_2(kk,i));
      
      Tot_SOP1(kk,i) =  (1-PSOP_1(kk,i))+ (1-PSOP_2(kk,i))-((1-PSOP_2(kk,i))*(1-PSOP_1(kk,i)));
            
@@ -99,21 +99,9 @@ semilogy(ps_dB,Tot_SOP1(3,:),'Marker','x','Linewidth',2,'MarkerSize',8,'Color','
 
 NOMA_THEO(R1_Setup,R2_Setup,pe_Setup);
 Fig3_OMA_Theory(R1_Setup,R2_Setup,pe_Setup);
-legend('R_1=0.1 sim.', 'R_1=1 sim.', 'R_1=1.3 sim.', 'NOMA ana.', '', '', 'NOMA asymptotic', '', '', 'OMA ana.', '', '', 'FontSize',11)
-
-%semilogy(ps_dB,Asymptotic(1,:),'Linewidth',1,'Color',[0.0,0.0,0.0],'LineStyle','--'),hold on
-%semilogy(ps_dB,Asymptotic(2,:),'Linewidth',1,'Color',[0.0,0.0,0.0],'LineStyle','-'),
-%semilogy(ps_dB,Asymptotic(3,:),'Linewidth',1,'Color',[0.0,0.0,0.0],'LineStyle','-'),
-
-
-%figure
-%semilogy(ps_dB, Tot_SOP, 'Linewidth',1,'Color',[0.0,1.0,0.0],'LineStyle','-');
-%hold on;
-
-%semilogy(ps_dB, Tot_SOP, 'Linewidth',1,'Color',[1.0,0.0,0.0],'LineStyle','-');
-%semilogy(ps_dB, Sonuc,'Linewidth',2,'Color',[1.0,0.0,0.0],'LineStyle','-');
+legend('R_1=0.5, R_2=2, λ_E=0 (dB) sim.','R_1=0.5, R_2=2, λ_E=-2 (dB) sim.','R_1=0.1, R_2=0.5, λ_E=-2 (dB) sim.', 'NOMA ana.', '', '', 'NOMA asymptotic', '', '', 'OMA ana.', '', '', 'FontSize',11)
 
 grid on
-xlabel('SNR (dB)','FontSize', 15);
-ylabel('Secrecy Outage Probability','FontSize', 15);
-axis([0 60  1e-3 1])
+xlabel('SNR (dB)', 'FontSize', 15);
+ylabel('Secrecy Outage Probability', 'FontSize', 15);
+axis([0 60  1e-4 1])

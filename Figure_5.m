@@ -39,9 +39,9 @@ a2=1-0.85;
 %R1,R2,Pe
 
 
-R1_Setup = [ 0.1 1 1.3];
-R2_Setup = [ 2 2 2];
-pe_Setup = [-5 -5 -5];
+R1_Setup = [ 0.1 0.1 0.1];
+R2_Setup = [ 1 1.5 2];
+pe_Setup = [0 0 0];
 for kk = 1:max(size(R1_Setup))
 R1=R1_Setup(kk);
 R2=R2_Setup(kk);
@@ -99,7 +99,7 @@ semilogy(ps_dB,Tot_SOP1(3,:),'Marker','x','Linewidth',2,'MarkerSize',8,'Color','
 
 NOMA_THEO(R1_Setup,R2_Setup,pe_Setup);
 Fig3_OMA_Theory(R1_Setup,R2_Setup,pe_Setup);
-legend('R_1=0.1 sim.', 'R_1=1 sim.', 'R_1=1.3 sim.', 'NOMA ana.', '', '', 'NOMA asymptotic', '', '', 'OMA ana.', '', '', 'FontSize',11)
+legend('R_1=1 sim.', 'R_1=1.5 sim.', 'R_1=2 sim.', 'NOMA ana.', '', '', 'NOMA asymptotic', '', '', 'OMA ana.', '', '', 'FontSize',11)
 
 %semilogy(ps_dB,Asymptotic(1,:),'Linewidth',1,'Color',[0.0,0.0,0.0],'LineStyle','--'),hold on
 %semilogy(ps_dB,Asymptotic(2,:),'Linewidth',1,'Color',[0.0,0.0,0.0],'LineStyle','-'),
@@ -112,6 +112,7 @@ legend('R_1=0.1 sim.', 'R_1=1 sim.', 'R_1=1.3 sim.', 'NOMA ana.', '', '', 'NOMA 
 
 %semilogy(ps_dB, Tot_SOP, 'Linewidth',1,'Color',[1.0,0.0,0.0],'LineStyle','-');
 %semilogy(ps_dB, Sonuc,'Linewidth',2,'Color',[1.0,0.0,0.0],'LineStyle','-');
+
 
 grid on
 xlabel('SNR (dB)','FontSize', 15);
